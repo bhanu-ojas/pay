@@ -1,0 +1,40 @@
+<div class="container">
+    <div class='row'>
+        <div class="col-12 pt-4">
+            <div class="form-group float-right">
+            <input class="px-3 py-2" type="text" [(ngModel)]="userFilter.first_name" placeholder="Search by name">
+            </div>
+            <table class="table table-striped p-3">
+                <thead>
+                  <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">First</th>
+                    <th scope="col">Last</th>
+                    <th scope="col">Handle</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let data of dataList | filterBy: userFilter" (click)="openModal(template)">
+                    <th scope="row">{{data.id}}</th>
+                    <td>{{data.first_name}}</td>
+                    <td>{{data.last_name}}</td>
+                    <td>{{data.email}}</td>
+ 
+                    <ng-template #template>
+                    <div class="modal-header">
+                        <h4 class="modal-title pull-left">{{data.first_name}}</h4>
+                        <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+                        <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        {{data | json}}
+                    </div>
+                    </ng-template>
+                  </tr>                 
+                </tbody>
+              </table>    
+              <h3 *ngIf="(dataList | filterBy: userFilter).length === 0" class="text-center p-3">No data found</h3>          
+        </div>
+    </div>
+</div>
